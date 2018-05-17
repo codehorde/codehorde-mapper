@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  * Created by baomingfeng at 2018-05-02 13:54:09
  */
+@SuppressWarnings("unchecked")
 public class MapTranslator implements PropertyTranslator<Map<?, ?>> {
 
     @Override
@@ -37,7 +38,6 @@ public class MapTranslator implements PropertyTranslator<Map<?, ?>> {
             for (Map.Entry<?, ?> entry : sourceMap.entrySet()) {
                 Object targetKey = BeanMapper.deepCopyFrom(entry.getKey(), keyType);
                 Object targetValue = BeanMapper.deepCopyFrom(entry.getValue(), valueType);
-                //noinspection unchecked
                 retMap.put(targetKey, targetValue);
             }
             return retMap;

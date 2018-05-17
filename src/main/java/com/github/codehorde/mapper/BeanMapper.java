@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentMap;
  * <p>
  * Created by baomingfeng at 2018-04-28 11:04:59
  */
+@SuppressWarnings("unchecked")
 public final class BeanMapper {
 
     private BeanMapper() {
@@ -83,7 +84,6 @@ public final class BeanMapper {
             return null;
         }
         Type type = typeRef.getType();
-        //noinspection unchecked
         return (T) deepCopyFrom(value, type);
     }
 

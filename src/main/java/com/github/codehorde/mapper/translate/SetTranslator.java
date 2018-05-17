@@ -10,6 +10,7 @@ import java.util.Set;
 /**
  * Created by baomingfeng at 2018-05-02 13:54:09
  */
+@SuppressWarnings("unchecked")
 public class SetTranslator implements PropertyTranslator<Set<?>> {
 
     @Override
@@ -21,7 +22,6 @@ public class SetTranslator implements PropertyTranslator<Set<?>> {
             Set retSet = ClassHelper.instantiate(sourcePropValue.getClass());
             for (Object source : sourceSet) {
                 Object target = BeanMapper.deepCopyFrom(source, componentType);
-                //noinspection unchecked
                 retSet.add(target);
             }
             return retSet;

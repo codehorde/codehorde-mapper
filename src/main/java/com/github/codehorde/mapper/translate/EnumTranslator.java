@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 /**
  * Created by baomingfeng at 2018-04-28 12:57:39
  */
+@SuppressWarnings("unchecked")
 public class EnumTranslator implements PropertyTranslator<Enum<?>> {
 
     @Override
@@ -16,7 +17,6 @@ public class EnumTranslator implements PropertyTranslator<Enum<?>> {
             return Enum.valueOf(targetPropClass, (String) sourcePropValue);
         }
 
-        //noinspection unchecked
         if (targetPropClass.isAssignableFrom(sourcePropValue.getClass())) {
             return (Enum<?>) sourcePropValue;
         }

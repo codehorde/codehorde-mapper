@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 /**
  * Created by baomingfeng at 2018-05-02 13:54:09
  */
+@SuppressWarnings({"unchecked", "SuspiciousSystemArraycopy"})
 public class ArrayTranslator implements PropertyTranslator<Object> {
 
     @Override
@@ -23,7 +24,6 @@ public class ArrayTranslator implements PropertyTranslator<Object> {
             //TODO 对于基础类型如byte[]数组是否有必要创建一个数组用于复制？
             Object retArray = Array.newInstance(componentType, len);
             if (ClassHelper.isBasicClass(componentType)) {
-                //noinspection SuspiciousSystemArraycopy
                 System.arraycopy(sourcePropValue, 0, retArray, 0, len);
             } else {
                 for (int index = 0; index < len; index++) {

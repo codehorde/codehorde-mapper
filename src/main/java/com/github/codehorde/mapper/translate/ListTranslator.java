@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * Created by baomingfeng at 2018-05-02 13:54:09
  */
+@SuppressWarnings("unchecked")
 public class ListTranslator implements PropertyTranslator<List<?>> {
 
     @Override
@@ -21,7 +22,6 @@ public class ListTranslator implements PropertyTranslator<List<?>> {
             List retList = ClassHelper.instantiate(sourcePropValue.getClass());
             for (Object source : sourceList) {
                 Object target = BeanMapper.deepCopyFrom(source, componentType);
-                //noinspection unchecked
                 retList.add(target);
             }
             return retList;

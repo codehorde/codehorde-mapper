@@ -13,6 +13,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * Created by baomingfeng at 2018-05-02 16:00:24
  */
+@SuppressWarnings("unchecked")
 public final class ClassHelper {
 
     private static ConcurrentMap<Class<?>, Class<?>>
@@ -162,6 +163,7 @@ public final class ClassHelper {
     /**
      * 留意这里返回的对象不是反射调用构造方法创建出来的（Cglib FastClass）
      */
+
     public static <T> T instantiate(Class<?> clazz) {
         Boolean support = supportInstantiateCache.get(clazz);
         if (support == null) {
@@ -174,13 +176,12 @@ public final class ClassHelper {
             FastClass fastClass = getFastClass(clazz);
 
             try {
-                //noinspection unchecked
                 return (T) fastClass.newInstance();
             } catch (InvocationTargetException ex) {
                 throw new UnsupportedOperationException(
                         "create class [" + clazz + "] instance error! ", ex);
             }
-        } else {
+        } else {//TODO 这里目标类没有实现类描述，复制源的实现类是不能实例化的
             if (List.class.isAssignableFrom(clazz)) {
                 //noinspection unchecked
                 return (T) new ArrayList();
