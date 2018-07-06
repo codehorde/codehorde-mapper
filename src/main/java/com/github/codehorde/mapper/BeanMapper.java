@@ -71,7 +71,7 @@ public final class BeanMapper {
     }
 
     public static <T> T deepCopyFrom(Object source, Class<T> targetClass) {
-        if (source == null) {
+        if (source == null || targetClass == null) {
             return null;
         }
         T target = ClassHelper.instantiate(targetClass);
@@ -80,7 +80,7 @@ public final class BeanMapper {
     }
 
     public static <T> T deepCopyFrom(Object value, TypeRef<T> typeRef) {
-        if (value == null) {
+        if (value == null || typeRef == null) {
             return null;
         }
         Type type = typeRef.getType();
