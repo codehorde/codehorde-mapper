@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 /**
  * 普通对象互相复制
  * <p>
- * Created by baomingfeng at 2018-05-02 16:59:01
+ * Created by Bao.Mingfeng at 2018-05-02 16:59:01
  */
 public class BeanTranslator implements PropertyTranslator<Object> {
 

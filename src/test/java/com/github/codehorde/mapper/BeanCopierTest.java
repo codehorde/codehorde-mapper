@@ -6,13 +6,13 @@ import net.sf.cglib.core.DebuggingClassWriter;
 import java.util.*;
 
 /**
- * Created by baomingfeng at 2018-05-02 11:19:36
+ * Created by Bao.Mingfeng at 2018-05-02 11:19:36
  */
 public class BeanCopierTest {
 
     public static void main(String[] args) {
 
-        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "/Users/baomingfeng/Downloads/cglib");
+        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "/Users/tidu/Downloads/cglib");
 
         test1();
         test2();

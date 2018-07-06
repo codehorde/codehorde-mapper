@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * 对象复制
  * <p>
- * Created by baomingfeng at 2018-04-28 11:04:59
+ * Created by Bao.Mingfeng at 2018-04-28 11:04:59
  */
 @SuppressWarnings("unchecked")
 public final class BeanMapper {
@@ -99,9 +99,9 @@ public final class BeanMapper {
     }
 
     /*
-        <SourceClass, <TargetClass, <Converter, BeanCopier>>>
+        <SourceClass#TargetClass#useConverter, BeanCopier>
     */
-    private static ConcurrentMap<Class<?>, ConcurrentMap<Class<?>, ConcurrentMap<Boolean, BeanCopier>>>
+    private static ConcurrentMap<String, BeanCopier>
             beanCopiers = new ConcurrentHashMap<>();
 
     public static BeanCopier findCopier(Class<?> sourceClass, Class<?> targetClass) {
@@ -112,27 +112,17 @@ public final class BeanMapper {
     private final static Object CreateClassLock = new Object();
 
     public static BeanCopier findCopier(Class<?> sourceClass, Class<?> targetClass, boolean useConverter) {
-        ConcurrentMap<Class<?>, ConcurrentMap<Boolean, BeanCopier>> targetCopierMap = beanCopiers.get(sourceClass);
-        if (targetCopierMap == null) {
-            targetCopierMap = new ConcurrentHashMap<>();
-            beanCopiers.putIfAbsent(sourceClass, targetCopierMap);
-            targetCopierMap = beanCopiers.get(sourceClass);
-        }
+        String cacheKey = sourceClass.getName()
+                + "/" + targetClass.getCanonicalName()
+                + "/" + String.valueOf(useConverter);
 
-        ConcurrentMap<Boolean, BeanCopier> copierMap = targetCopierMap.get(targetClass);
-        if (copierMap == null) {
-            copierMap = new ConcurrentHashMap<>();
-            targetCopierMap.putIfAbsent(targetClass, copierMap);
-            copierMap = targetCopierMap.get(targetClass);
-        }
-
-        BeanCopier copier = copierMap.get(useConverter);
+        BeanCopier copier = beanCopiers.get(cacheKey);
         if (copier == null) {
             synchronized (CreateClassLock) {
-                copier = copierMap.get(useConverter);
+                copier = beanCopiers.get(cacheKey);
                 if (copier == null) {
                     copier = BeanCopier.create(sourceClass, targetClass, useConverter);
-                    copierMap.put(useConverter, copier);
+                    beanCopiers.put(cacheKey, copier);
                 }
             }
         }

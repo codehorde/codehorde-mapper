@@ -6,7 +6,7 @@ import java.lang.reflect.Type;
 import java.math.BigDecimal;
 
 /**
- * Created by baomingfeng at 2018-04-28 12:57:39
+ * Created by Bao.Mingfeng at 2018-04-28 12:57:39
  */
 public class BigDecimalTranslator implements PropertyTranslator<BigDecimal> {
 

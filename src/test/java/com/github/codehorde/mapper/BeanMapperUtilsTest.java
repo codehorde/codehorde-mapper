@@ -8,12 +8,12 @@ import net.sf.cglib.core.DebuggingClassWriter;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by baomingfeng at 2018-04-28 16:17:15
+ * Created by Bao.Mingfeng at 2018-04-28 16:17:15
  */
 public class BeanMapperUtilsTest {
 
     public static void main(String[] args) {
-        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "/Users/baomingfeng/Downloads/cglib");
+        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "/Users/Bao.Mingfeng/Downloads/cglib");
 
         test1();
         //test2();

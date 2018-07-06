@@ -1,7 +1,7 @@
 package com.github.codehorde.mapper;
 
 /**
- * Created by baomingfeng at 2018-04-28 16:04:14
+ * Created by Bao.Mingfeng at 2018-04-28 16:04:14
  */
 public class PostTradeCommentVoHolder {
 

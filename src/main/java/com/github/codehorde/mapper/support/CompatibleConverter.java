@@ -10,6 +10,8 @@ import java.lang.reflect.Type;
  *     补充了一部分自动处理的方式
  *          1：目标对象同名属性类型为String，源对象属性转换
  * </pre>
+ * <p>
+ * Created by Bao.Mingfeng at 2018-05-02 16:00:24
  */
 public class CompatibleConverter implements Converter {
 

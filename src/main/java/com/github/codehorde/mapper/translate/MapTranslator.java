@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by baomingfeng at 2018-05-02 13:54:09
+ * Created by Bao.Mingfeng at 2018-05-02 13:54:09
  */
 @SuppressWarnings("unchecked")
 public class MapTranslator implements PropertyTranslator<Map<?, ?>> {

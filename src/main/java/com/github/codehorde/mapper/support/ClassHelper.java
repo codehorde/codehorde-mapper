@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
- * Created by baomingfeng at 2018-05-02 16:00:24
+ * Created by Bao.Mingfeng at 2018-05-02 16:00:24
  */
 @SuppressWarnings("unchecked")
 public final class ClassHelper {
@@ -64,30 +64,15 @@ public final class ClassHelper {
     }
 
     /*
-        <targetClass, <methodName, <parameterClass, ParameterizedType>>>
+        <targetClass#methodName(parameterClass), ParameterizedType>>>
     */
-    private static ConcurrentMap<Class<?>, ConcurrentMap<String, ConcurrentMap<Class<?>, Holder<ParameterizedType>>>>
+    private static ConcurrentMap<String, Holder<ParameterizedType>>
             MethodParameterTypeCache = new ConcurrentHashMap<>();
 
     public static ParameterizedType getMethodParameterType(
             Class<?> targetClass, String methodName, Class<?> parameterClass) {
-        ConcurrentMap<String, ConcurrentMap<Class<?>, Holder<ParameterizedType>>>
-                classMethodTypeMap = MethodParameterTypeCache.get(targetClass);
-        if (classMethodTypeMap == null) {
-            classMethodTypeMap = new ConcurrentHashMap<>();
-            MethodParameterTypeCache.putIfAbsent(targetClass, classMethodTypeMap);
-            classMethodTypeMap = MethodParameterTypeCache.get(targetClass);
-        }
-
-        ConcurrentMap<Class<?>, Holder<ParameterizedType>>
-                methodTypeMap = classMethodTypeMap.get(methodName);
-        if (methodTypeMap == null) {
-            methodTypeMap = new ConcurrentHashMap<>();
-            classMethodTypeMap.putIfAbsent(methodName, methodTypeMap);
-            methodTypeMap = classMethodTypeMap.get(methodName);
-        }
-
-        Holder<ParameterizedType> typeHolder = methodTypeMap.get(parameterClass);
+        String cacheKey = targetClass.getName() + "#" + methodName + "(" + parameterClass.getName() + ")";
+        Holder<ParameterizedType> typeHolder = MethodParameterTypeCache.get(cacheKey);
         if (typeHolder == null) {
             ParameterizedType parameterizedType = null;
             Method method = findMethod(targetClass, methodName, parameterClass);
@@ -100,7 +85,7 @@ public final class ClassHelper {
             }
 
             typeHolder = new Holder<>(parameterizedType);
-            methodTypeMap.putIfAbsent(parameterClass, typeHolder);//cache
+            MethodParameterTypeCache.putIfAbsent(cacheKey, typeHolder);//cache
         }
 
         return typeHolder.get();

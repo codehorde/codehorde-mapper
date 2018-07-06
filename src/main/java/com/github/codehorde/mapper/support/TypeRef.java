@@ -4,7 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
- * Created by baomingfeng at 2018-05-09 13:37:18
+ * Created by Bao.Mingfeng at 2018-05-09 13:37:18
  */
 public class TypeRef<T> {
 

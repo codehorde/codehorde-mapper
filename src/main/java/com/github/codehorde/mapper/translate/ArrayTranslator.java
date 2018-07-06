@@ -8,7 +8,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 
 /**
- * Created by baomingfeng at 2018-05-02 13:54:09
+ * Created by Bao.Mingfeng at 2018-05-02 13:54:09
  */
 @SuppressWarnings({"unchecked", "SuspiciousSystemArraycopy"})
 public class ArrayTranslator implements PropertyTranslator<Object> {

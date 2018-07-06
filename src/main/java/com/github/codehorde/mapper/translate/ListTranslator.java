@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * Created by baomingfeng at 2018-05-02 13:54:09
+ * Created by Bao.Mingfeng at 2018-05-02 13:54:09
  */
 @SuppressWarnings("unchecked")
 public class ListTranslator implements PropertyTranslator<List<?>> {

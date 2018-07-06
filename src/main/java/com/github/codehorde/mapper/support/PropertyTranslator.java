@@ -3,7 +3,7 @@ package com.github.codehorde.mapper.support;
 import java.lang.reflect.Type;
 
 /**
- * Created by baomingfeng at 2018-04-28 12:51:16
+ * Created by Bao.Mingfeng at 2018-04-28 12:51:16
  */
 public interface PropertyTranslator<T> {
 

@@ -5,7 +5,7 @@ import com.github.codehorde.mapper.support.PropertyTranslator;
 import java.lang.reflect.Type;
 
 /**
- * Created by baomingfeng at 2018-04-28 12:57:39
+ * Created by Bao.Mingfeng at 2018-04-28 12:57:39
  */
 public class LongTranslator implements PropertyTranslator<Long> {
 

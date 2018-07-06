@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 提交评论
  * <p>
- * Created by baomingfeng at 2018-04-26 16:51:35
+ * Created by Bao.Mingfeng at 2018-04-26 16:51:35
  */
 public class PostTradeCommentVo implements java.io.Serializable {
 

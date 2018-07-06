@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Created by baomingfeng at 2018-05-02 16:03:35
+ * Created by Bao.Mingfeng at 2018-05-02 16:03:35
  */
 public final class TranslatorRegistry {
     /*

@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.util.Set;
 
 /**
- * Created by baomingfeng at 2018-05-02 13:54:09
+ * Created by Bao.Mingfeng at 2018-05-02 13:54:09
  */
 @SuppressWarnings("unchecked")
 public class SetTranslator implements PropertyTranslator<Set<?>> {
