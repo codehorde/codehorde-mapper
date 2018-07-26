@@ -1,0 +1,17 @@
+com.github.codehorde.mapper.internal.ArrayPropertyTranslator
+com.github.codehorde.mapper.internal.BeanPropertyTranslator
+com.github.codehorde.mapper.internal.BigDecimalPropertyTranslator
+com.github.codehorde.mapper.internal.BigIntegerPropertyTranslator
+com.github.codehorde.mapper.internal.BooleanPropertyTranslator
+com.github.codehorde.mapper.internal.BytePropertyTranslator
+com.github.codehorde.mapper.internal.CharacterPropertyTranslator
+com.github.codehorde.mapper.internal.DoublePropertyTranslator
+com.github.codehorde.mapper.internal.EnumPropertyTranslator
+com.github.codehorde.mapper.internal.FloatPropertyTranslator
+com.github.codehorde.mapper.internal.IntegerPropertyTranslator
+com.github.codehorde.mapper.internal.ListPropertyTranslator
+com.github.codehorde.mapper.internal.LongPropertyTranslator
+com.github.codehorde.mapper.internal.MapPropertyTranslator
+com.github.codehorde.mapper.internal.SetPropertyTranslator
+com.github.codehorde.mapper.internal.ShortPropertyTranslator
+com.github.codehorde.mapper.internal.StringPropertyTranslator

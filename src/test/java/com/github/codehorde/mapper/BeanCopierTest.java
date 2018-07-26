@@ -1,6 +1,6 @@
 package com.github.codehorde.mapper;
 
-import com.github.codehorde.mapper.support.TypeRef;
+import com.github.codehorde.mapper.pojo.*;
 import net.sf.cglib.core.DebuggingClassWriter;
 
 import java.util.*;
@@ -12,11 +12,11 @@ public class BeanCopierTest {
 
     public static void main(String[] args) {
 
-        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "/Users/tidu/Downloads/cglib");
+        String debugFolder = System.getProperty("user.home") + "/Downloads/cglib";
+        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, debugFolder);
 
         test1();
         test2();
-
     }
 
     private static void test1() {
@@ -75,11 +75,12 @@ public class BeanCopierTest {
         map.put(key, valueList);
         commentVo.setMap(map);
 
-        Object retVal = BeanMapper.deepCopyFrom(commentVo, PostOrderCommentDto.class);
+        Object retVal = BeanMapper.deepMapBy(commentVo, PostOrderCommentDto.class);
 
-        System.out.println(retVal);
+        ConsoleUtils.prettyPrint(retVal);
     }
 
+    @SuppressWarnings("unchecked")
     private static void test2() {
         List<PostTradeCommentVo> valueList = new ArrayList<>();
         PostTradeCommentVo value1 = new PostTradeCommentVo();
@@ -100,15 +101,39 @@ public class BeanCopierTest {
         postTradeCommentVoPageResult.setPageSize(3);
         postTradeCommentVoPageResult.setTotal(703L);
         postTradeCommentVoPageResult.setData(valueList);
+
+        List<PostTradeCommentVo>[] datas = new List[2];
+        PostTradeCommentVo datas0 = new PostTradeCommentVo();
+        datas0.setName("datas0");
+        PostTradeCommentVo datas1 = new PostTradeCommentVo();
+        datas1.setName("datas1");
+        datas[0] = Arrays.asList(datas0, datas1);
+        PostTradeCommentVo datas10 = new PostTradeCommentVo();
+        datas10.setName("datas10");
+        PostTradeCommentVo datas11 = new PostTradeCommentVo();
+        datas11.setName("datas11");
+        datas[1] = Arrays.asList(datas10, datas11);
+        postTradeCommentVoPageResult.setDatas(datas);
+
+        PostTradeCommentVo[] items = new PostTradeCommentVo[2];
+        items[0] = new PostTradeCommentVo();
+        items[0].setContent("items 0");
+        items[1] = new PostTradeCommentVo();
+        items[1].setContent("items 1");
+        postTradeCommentVoPageResult.setItems(items);
+
         PageResult<PostTradeCommentDto> postTradeCommentDtoPageResult
-                = BeanMapper.deepCopyFrom(postTradeCommentVoPageResult, new TypeRef<PageResult<PostTradeCommentDto>>() {
+                = BeanMapper.deepMapBy(postTradeCommentVoPageResult, new TypeRef<PageResult<PostTradeCommentDto>>() {
         });
 
-        System.out.println(postTradeCommentDtoPageResult);
+
+        ConsoleUtils.prettyPrint(postTradeCommentVoPageResult);
+        ConsoleUtils.prettyPrint(postTradeCommentDtoPageResult);
 
         List<PostTradeCommentDto> dtoList
-                = BeanMapper.deepCopyFrom(valueList, new TypeRef<List<PostTradeCommentDto>>() {
+                = BeanMapper.deepMapBy(valueList, new TypeRef<List<PostTradeCommentDto>>() {
         });
-        System.out.println(dtoList);
+
+        ConsoleUtils.prettyPrint(dtoList);
     }
 }
