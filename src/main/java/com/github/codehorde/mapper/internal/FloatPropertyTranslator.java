@@ -1,6 +1,5 @@
 package com.github.codehorde.mapper.internal;
 
-import com.github.codehorde.mapper.support.MathUtils;
 import com.github.codehorde.mapper.support.PropertyTranslator;
 
 import java.lang.reflect.Type;
@@ -22,9 +21,13 @@ public class FloatPropertyTranslator implements PropertyTranslator<Float> {
         }
 
         if (sourcePropValue instanceof Number) {
-            return MathUtils.toFloatExact(((Number) sourcePropValue).doubleValue());
+            Number number = (Number) sourcePropValue;
+            double value = number.doubleValue();
+            if (value > Float.MAX_VALUE || value < Float.MIN_VALUE) {
+                throw new ArithmeticException("float overflow: " + value);
+            }
+            return number.floatValue();
         }
-
         throw new UnsupportedOperationException(getClass().getSimpleName()
                 + ": cannot create instance, sourcePropClass: "
                 + sourcePropValue.getClass() + ", targetPropClass: " + targetPropType);
