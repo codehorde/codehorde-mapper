@@ -42,6 +42,13 @@ public final class MathUtils {
         return (byte) value;
     }
 
+    public static float toFloatExact(double value) {
+        if ((float) value != value) {
+            throw new ArithmeticException("float overflow: " + value);
+        }
+        return (float) value;
+    }
+
     private MathUtils() {
     }
 }

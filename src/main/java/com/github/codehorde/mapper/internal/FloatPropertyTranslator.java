@@ -1,5 +1,6 @@
 package com.github.codehorde.mapper.internal;
 
+import com.github.codehorde.mapper.support.MathUtils;
 import com.github.codehorde.mapper.support.PropertyTranslator;
 
 import java.lang.reflect.Type;
@@ -21,7 +22,7 @@ public class FloatPropertyTranslator implements PropertyTranslator<Float> {
         }
 
         if (sourcePropValue instanceof Number) {
-            return ((Number) sourcePropValue).floatValue();
+            return MathUtils.toFloatExact(((Number) sourcePropValue).doubleValue());
         }
 
         throw new UnsupportedOperationException(getClass().getSimpleName()
@@ -31,6 +32,6 @@ public class FloatPropertyTranslator implements PropertyTranslator<Float> {
 
     @Override
     public Float translate(Object sourcePropValue, Type targetType, Type targetPropType) {
-        return newInstance(sourcePropValue,  targetType,  targetPropType);
+        return newInstance(sourcePropValue, targetType, targetPropType);
     }
 }
