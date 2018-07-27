@@ -6,8 +6,11 @@ import com.github.codehorde.mapper.support.ConverterFactory;
 import com.github.codehorde.mapper.support.PropertyTranslator;
 import com.github.codehorde.mapper.support.Registry;
 import net.sf.cglib.beans.BeanCopier;
+import net.sf.cglib.beans.BeanMap;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 基于对象属性名称相同的对象属性复制 note: 属性为getter, setter方法所定义，非类的成员变量
@@ -174,6 +177,67 @@ public final class BeanMapper {
         }
         PropertyTranslator translator = Registry.findPropertyTranslator(targetClass);
         return (T) translator.newInstance(sourceObject, targetClass, targetClass);
+    }
+
+    /**
+     * Pojo --> Map
+     */
+    public static <T> Map<String, Object> describe(T bean) {
+        if (bean == null) {
+            return null;
+        }
+
+        Map<String, Object> retMap = new HashMap<>();
+        BeanMap beanMap = ClassUtils.createBeanMap(bean);
+        if (beanMap != null) {
+            for (Object key : beanMap.keySet()) {
+                retMap.put((String) key, beanMap.get(key));
+            }
+        }
+        return retMap;
+    }
+
+    /**
+     * Pojo设置Map中的值
+     */
+    public static void populate(Map<String, Object> sourceMap, Object bean) {
+        if (bean == null) {
+            return;
+        }
+
+        Class<?> beanClass = bean.getClass();
+
+        if (sourceMap != null) {
+            BeanMap emptyBeanMap = ClassUtils.findBeanMap(beanClass);
+            if (emptyBeanMap != null) {
+                BeanMap beanMap = emptyBeanMap.newInstance(bean);
+                for (Map.Entry<String, Object> entry : sourceMap.entrySet()) {
+                    beanMap.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+    }
+
+    /**
+     * Pojo设置Map中的值
+     */
+    public static <T> T populate(Map<String, Object> sourceMap, Class<T> beanClass) {
+        if (beanClass == null) {
+            return null;
+        }
+
+        T bean = ClassUtils.instantiate(beanClass);
+
+        if (sourceMap != null) {
+            BeanMap beanMap = ClassUtils.createBeanMap(bean);
+            if (beanMap != null) {
+                for (Map.Entry<String, Object> entry : sourceMap.entrySet()) {
+                    beanMap.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+
+        return bean;
     }
 
     private BeanMapper() {

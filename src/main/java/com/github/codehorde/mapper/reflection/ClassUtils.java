@@ -2,6 +2,7 @@ package com.github.codehorde.mapper.reflection;
 
 import com.github.codehorde.mapper.support.Holder;
 import net.sf.cglib.beans.BeanCopier;
+import net.sf.cglib.beans.BeanMap;
 import net.sf.cglib.reflect.FastClass;
 
 import java.lang.reflect.*;
@@ -209,16 +210,17 @@ public final class ClassUtils {
         }
     }
 
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FastClass ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
     private static final ConcurrentMap<Class<?>, FastClass> FastClassCache = new ConcurrentHashMap<>();
 
-    //生成类过程比较耗费资源，使用synchronized加锁处理
-    private final static Object GenerateClassLock = new Object();
+    private final static Object FastClassLock = new Object();
 
     public static FastClass getFastClass(Class<?> clazz) {
         FastClass result = FastClassCache.get(clazz);
 
         if (result == null) {
-            synchronized (GenerateClassLock) {
+            synchronized (FastClassLock) {
                 result = FastClassCache.get(clazz);
                 if (result == null) {
                     result = FastClass.create(clazz);
@@ -230,11 +232,55 @@ public final class ClassUtils {
         return result;
     }
 
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BeanMap ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+    private static final ConcurrentMap<Class<?>, BeanMap> BeanMapCache = new ConcurrentHashMap<>();
+
+    private final static Object BeanMapLock = new Object();
+
+    public static BeanMap findBeanMap(Class<?> beanClass) {
+        if (beanClass == Object.class) {
+            return null;
+        }
+
+        BeanMap beanMap = BeanMapCache.get(beanClass);
+
+        if (beanMap == null) {
+            Object bean = ClassUtils.instantiate(beanClass);
+            synchronized (BeanMapLock) {
+                beanMap = BeanMapCache.get(beanClass);
+                if (beanMap == null) {
+                    beanMap = BeanMap.create(bean);
+                    BeanMapCache.put(beanClass, beanMap);
+                }
+            }
+        }
+
+        return beanMap;
+    }
+
+    public static BeanMap createBeanMap(Object bean) {
+        if (bean == null) {
+            return null;
+        }
+
+        Class<?> beanClass = bean.getClass();
+        BeanMap beanMap = findBeanMap(beanClass);
+        if (beanMap != null) {
+            return beanMap.newInstance(bean);
+        }
+
+        return null;
+    }
+
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BeanCopier ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
     /*
         String(SourceClass/TargetClass/useConverter) --> BeanCopier
     */
     private static ConcurrentMap<String, BeanCopier> beanCopiers = new ConcurrentHashMap<>();
+
+    private final static Object BeanCopierLock = new Object();
 
     public static BeanCopier findCopier(Class<?> sourceClass, Class<?> targetClass) {
         return findCopier(sourceClass, targetClass, false);
@@ -247,7 +293,7 @@ public final class ClassUtils {
 
         BeanCopier copier = beanCopiers.get(cacheKey);
         if (copier == null) {
-            synchronized (GenerateClassLock) {
+            synchronized (BeanCopierLock) {
                 copier = beanCopiers.get(cacheKey);
                 if (copier == null) {
                     copier = BeanCopier.create(sourceClass, targetClass, useConverter);
