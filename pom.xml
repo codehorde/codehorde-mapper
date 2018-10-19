@@ -33,6 +33,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.21.0-GA</version>
+        </dependency>
+
+        <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
             <version>3.2.7</version>
@@ -51,6 +57,7 @@
             <version>1.1.37</version>
             <optional>true</optional>
         </dependency>
+
     </dependencies>
 
     <build>
